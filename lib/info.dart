@@ -59,9 +59,8 @@ class _InfoScreenState extends State<InfoScreen> {
               padding: const EdgeInsets.only(bottom: 60),
               child: SafeArea(
                 child: Center(
-                  child: Lottie.network(
-                    'https://assets9.lottiefiles.com/packages/lf20_M9p23l.json',
-                    errorBuilder: (context, error, stackTrace) => const Icon(Icons.account_circle, size: 100, color: Color(0xFF1976D2)),
+                  child: Lottie.asset(
+                    'assets/info.json',
                     fit: BoxFit.contain,
                   ),
                 ),
