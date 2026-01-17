@@ -16,13 +16,13 @@ class DiscoverPage extends StatelessWidget {
         children: [
           // 1. Background Image
           Positioned.fill(
-            child: Image.network(
-              'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?q=80&w=2013&auto=format&fit=crop',
+            child: Image.asset(
+              'assets/bg.jpeg',
               fit: BoxFit.cover,
             ),
           ),
 
-          // 2. Gradient Layer (Transparent to White)
+          // 2. Gradient Layer
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -40,14 +40,27 @@ class DiscoverPage extends StatelessWidget {
             ),
           ),
 
-          // 3. Content (Text and Button)
+          // 3. Content
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Spacer to push content to bottom
+                  // --- NEW: Logo Added Here ---
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Transform.translate(
+                      offset: const Offset(-80, 340), 
+                      child: Image.asset(
+                        'assets/Icon_Setu.png',
+                        height: 130, 
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+
+                  // Spacer pushes everything below it to the bottom
                   const Spacer(), 
 
                   // Bottom Text
@@ -71,7 +84,7 @@ class DiscoverPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
 
-                  // Get Started Button with Click Animation
+                  // Get Started Button
                   ScaleButton(
                     child: SizedBox(
                       width: double.infinity,
@@ -112,7 +125,7 @@ class DiscoverPage extends StatelessWidget {
   }
 }
 
-// --- Custom Widget for Click Animation ---
+// --- Custom Widget for Click Animation (Unchanged) ---
 class ScaleButton extends StatefulWidget {
   final Widget child;
   const ScaleButton({super.key, required this.child});
@@ -131,7 +144,7 @@ class _ScaleButtonState extends State<ScaleButton> {
       onPointerUp: (_) => setState(() => _isPressed = false),
       onPointerCancel: (_) => setState(() => _isPressed = false),
       child: AnimatedScale(
-        scale: _isPressed ? 0.95 : 1.0, // Shrinks to 95% when pressed
+        scale: _isPressed ? 0.95 : 1.0,
         duration: const Duration(milliseconds: 100),
         curve: Curves.easeInOut,
         child: widget.child,
