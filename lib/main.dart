@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import this
+import 'discover.dart';
+import 'home.dart'; // Ensure you import your Home Page
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +22,6 @@ class MyApp extends StatelessWidget {
           seedColor: const Color(0xFF1976D2),
           primary: const Color(0xFF1976D2),
         ),
-        // Applying Google Fonts globally
         fontFamily: GoogleFonts.poppins().fontFamily,
         useMaterial3: true,
         inputDecorationTheme: InputDecorationTheme(
@@ -41,7 +42,46 @@ class MyApp extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
       ),
-      home: const LoginScreen(),
+      // Check login status here
+      home: const AuthCheck(),
     );
+  }
+}
+
+class AuthCheck extends StatefulWidget {
+  const AuthCheck({super.key});
+
+  @override
+  State<AuthCheck> createState() => _AuthCheckState();
+}
+
+class _AuthCheckState extends State<AuthCheck> {
+  bool? _isLoggedIn;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // Defaults to false if no key is found
+      _isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Show a loading spinner while checking preference
+    if (_isLoggedIn == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    // Logic: If logged in -> Home, Else -> Discover
+    return _isLoggedIn! ? const HomePage() : const DiscoverPage();
   }
 }

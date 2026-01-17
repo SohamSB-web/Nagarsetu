@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'home.dart';
@@ -50,10 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void _submitForm() {
+  void _submitForm() async { // Make this async
     FocusScope.of(context).unfocus();
 
-    // Check OTP requirement for Sign Up
     if (!_isLogin && !_otpSent) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please verify your email by sending an OTP first.')),
@@ -64,20 +64,23 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
 
+      // --- SAVE LOGIN STATE ---
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      // ------------------------
+
       // Simulate Network Delay
       Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
         if (mounted) {
           setState(() => _isLoading = false);
 
           if (_isLogin) {
-            // Flow A: Login -> Home Page
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const HomePage()),
               (route) => false,
             );
           } else {
-            // Flow B: Sign Up -> Personal Info Screen
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const InfoScreen()),
@@ -335,7 +338,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           _buildTextField(
             controller: _passwordController,
-            label: _isLogin ? "Password" : "Set Password",
+            label: _isLogin ? "Password" : "Enter Password",
             icon: Icons.lock_outline,
             isObscure: _obscurePassword,
             hasSuffix: true,
