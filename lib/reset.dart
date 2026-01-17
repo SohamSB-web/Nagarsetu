@@ -95,8 +95,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               padding: const EdgeInsets.only(bottom: 60),
               child: SafeArea(
                 child: Center(
-                  child: Lottie.network(
-                    'https://assets3.lottiefiles.com/packages/lf20_gjmecwii.json', // Lock/Security Animation
+                  child: Lottie.asset(
+                    'assets/reset.json', // Lock/Security Animation
                     errorBuilder: (context, error, stackTrace) => 
                         const Icon(Icons.lock_reset, size: 80, color: Color(0xFF1976D2)),
                   ),
