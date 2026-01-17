@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import this
+import 'package:shared_preferences/shared_preferences.dart';
 import 'discover.dart';
-import 'home.dart'; // Ensure you import your Home Page
+import 'home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +21,8 @@ class MyApp extends StatelessWidget {
           seedColor: const Color(0xFF1976D2),
           primary: const Color(0xFF1976D2),
         ),
-        fontFamily: GoogleFonts.poppins().fontFamily,
+        // CHANGED: Use the string name defined in pubspec.yaml
+        fontFamily: 'Poppins', 
         useMaterial3: true,
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
