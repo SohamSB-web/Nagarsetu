@@ -103,30 +103,28 @@ class _LoginScreenState extends State<LoginScreen> {
             alignment: Alignment.topCenter,
             child: RepaintBoundary(
               child: Container(
-                height: size.height * 0.4,
+                height: size.height * 0.5,
                 color: const Color(0xFFF5F7FA),
                 padding: const EdgeInsets.only(bottom: 60),
                 child: SafeArea(
                   child: Center(
-                    child: Lottie.network(
-                      'https://assets5.lottiefiles.com/packages/lf20_jcikwtux.json',
+                    child: Lottie.asset(
+                      'assets/animation.json', // Updated to use your local asset
                       renderCache: RenderCache.drawingCommands,
-                      frameBuilder: (context, child, composition) {
-                        if (composition != null) {
-                          return FadeTransition(
-                            opacity: const AlwaysStoppedAnimation(1),
-                            child: child,
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
                       errorBuilder: (context, error, stackTrace) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(Icons.location_city_rounded, size: 80, color: Color(0xFF1976D2)),
                             const SizedBox(height: 16),
-                            Text("CityConnect", style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: const Color(0xFF1976D2))),
+                            Text(
+                              "NagarSetu", 
+                              style: GoogleFonts.poppins(
+                                fontSize: 24, 
+                                fontWeight: FontWeight.bold, 
+                                color: const Color(0xFF1976D2)
+                              )
+                            ),
                           ],
                         );
                       },
